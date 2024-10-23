@@ -20,7 +20,7 @@ contract CodattaNFTTest is Test {
         console.log("start");
         proxy = Upgrades.deployUUPSProxy(
             "CodattaNFT.sol",
-            abi.encodeCall(CodattaNFT.initialize, OWNER_ADDRESS)
+            abi.encodeCall(CodattaNFT.initialize, (OWNER_ADDRESS, OWNER_ADDRESS))
         );
 
         console.log("uups proxy -> %s", proxy);

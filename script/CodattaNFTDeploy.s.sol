@@ -15,7 +15,7 @@ contract CodattaNFTDeploy is Script {
 
         address uupsProxy = Upgrades.deployUUPSProxy(
             "CodattaNFT.sol",
-            abi.encodeCall(CodattaNFT.initialize, OWNER_ADDRESS)
+            abi.encodeCall(CodattaNFT.initialize, (OWNER_ADDRESS, OWNER_ADDRESS))
         );
 
         console.log("uupsProxy deploy at %s", uupsProxy);

@@ -9,8 +9,6 @@ optimizer = true
 optimizer_runs = 200
 ffi = true
 ast = true
-[env]
-dotenv = ".env"
 [rpc_endpoints]
 mintTest = "https://sepolia-testnet-rpc.mintchain.io"
 mint = "https://rpc.mintchain.io"

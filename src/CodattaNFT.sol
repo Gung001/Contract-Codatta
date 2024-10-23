@@ -23,21 +23,20 @@ contract CodattaNFT is Initializable, ERC721Upgradeable, OwnableUpgradeable, UUP
         _disableInitializers();
     }
 
-    function initialize(address initialOwner) initializer public {
+    function initialize(address initialOwner, address initialSigner) initializer public {
         __ERC721_init("CodattaNFT", "CD");
         __Ownable_init(initialOwner);
         __UUPSUpgradeable_init();
         __ReentrancyGuard_init();
 
-        signer = initialOwner;
-        _currentTokenId = 0;
+        signer = initialSigner;
         DOMAIN_SEPARATOR = _computeDomainSeparator();
     }
 
     function mint(bytes32 _r, bytes32 _s, uint8 _v) public nonReentrant {
 
         require(balanceOf(msg.sender) == 0, "CodattaNFT: Own only one token");
-        require(_currentTokenId + 1 <= MAX_SUPPLY, "CodattaNFT: Reach the max supply");
+        require(_currentTokenId < MAX_SUPPLY, "CodattaNFT: Reach the max supply");
         require(_verifySigner(msg.sender, _v, _r, _s) == signer, "CodattaNFT: Invalid signer");
 
         _currentTokenId++;
