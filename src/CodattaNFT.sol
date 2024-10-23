@@ -13,6 +13,7 @@ contract CodattaNFT is Initializable, ERC721Upgradeable, OwnableUpgradeable, UUP
 
     uint256 immutable MAX_SUPPLY = 1000;
     address public signer;
+    mapping(address => uint256) public addressToTokenId;
     
     string private _defaultURI;
     uint256 private _currentTokenId;
@@ -42,6 +43,12 @@ contract CodattaNFT is Initializable, ERC721Upgradeable, OwnableUpgradeable, UUP
         _currentTokenId++;
 
         _mint(msg.sender, _currentTokenId);
+
+        addressToTokenId[msg.sender] = _currentTokenId;
+    }
+
+    function currentTokenId() public view returns (uint256) {
+        return _currentTokenId;
     }
 
     function _verifySigner(
