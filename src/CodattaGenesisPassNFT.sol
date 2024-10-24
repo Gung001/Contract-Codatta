@@ -9,8 +9,9 @@ import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
 
-contract CodattaNFT is Initializable, ERC721Upgradeable, OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgradeable {
+contract CodattaGenesisPassNFT is Initializable, ERC721Upgradeable, OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgradeable {
 
+    /// @custom:oz-upgrades-unsafe-allow state-variable-immutable
     uint256 immutable MAX_SUPPLY = 1000;
     address public signer;
     mapping(address => uint256) public addressToTokenId;
@@ -25,7 +26,7 @@ contract CodattaNFT is Initializable, ERC721Upgradeable, OwnableUpgradeable, UUP
     }
 
     function initialize(address initialOwner, address initialSigner) initializer public {
-        __ERC721_init("CodattaNFT", "CD");
+        __ERC721_init("Codatta Genesis Pass", "CGP");
         __Ownable_init(initialOwner);
         __UUPSUpgradeable_init();
         __ReentrancyGuard_init();
@@ -36,9 +37,9 @@ contract CodattaNFT is Initializable, ERC721Upgradeable, OwnableUpgradeable, UUP
 
     function mint(bytes32 _r, bytes32 _s, uint8 _v) public nonReentrant {
 
-        require(balanceOf(msg.sender) == 0, "CodattaNFT: Own only one token");
-        require(_currentTokenId < MAX_SUPPLY, "CodattaNFT: Reach the max supply");
-        require(_verifySigner(msg.sender, _v, _r, _s) == signer, "CodattaNFT: Invalid signer");
+        require(balanceOf(msg.sender) == 0, "CodattaGenesisPassNFT: Own only one token");
+        require(_currentTokenId < MAX_SUPPLY, "CodattaGenesisPassNFT: Reach the max supply");
+        require(_verifySigner(msg.sender, _v, _r, _s) == signer, "CodattaGenesisPassNFT: Invalid signer");
 
         _currentTokenId++;
 
@@ -77,7 +78,7 @@ contract CodattaNFT is Initializable, ERC721Upgradeable, OwnableUpgradeable, UUP
     }
 
     function setSigner(address _signer) external onlyOwner {
-        require(_signer != address(0), "CodattaNFT: Zero address");
+        require(_signer != address(0), "CodattaGenesisPassNFT: Zero address");
         signer = _signer;
     }
 
@@ -101,7 +102,7 @@ contract CodattaNFT is Initializable, ERC721Upgradeable, OwnableUpgradeable, UUP
     {}
 
     function transferFrom(address from, address to, uint256 tokenId) public override  {
-        require(false, "CodattaNFT: Soul Bound Token");
+        require(false, "CodattaGenesisPassNFT: Soul Bound Token");
         super.transferFrom(from, to, tokenId);
     }
 
@@ -112,7 +113,7 @@ contract CodattaNFT is Initializable, ERC721Upgradeable, OwnableUpgradeable, UUP
                     keccak256(
                         "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"
                     ),
-                    keccak256(bytes("CodattaNFT")),
+                    keccak256(bytes("CodattaGenesisPassNFT")),
                     keccak256("1"),
                     block.chainid,
                     address(this)
